@@ -167,13 +167,17 @@ In addition to this, a simple overlapping box test is used between two consecuti
 ### ATTEMPT AT PARALLELIZING THE SOLUTION
 To make an attempt at detecting vehicles faster, one approach that was tried was to divide the work between multiple processes. For this, the `Queue()` and `Process()` classes are used from the multiprocessing module within Python. The idea is to split the work done for detecting vehicles using multiple window sizes into 4 processes. Each process handles one or more window sizes in parallel and deposits it’s result onto the shared `Queue()` which is then processed together later. The motivation behind this is to reduce the amount of time taken in feature extraction by having parallel workers do the job. Here are some times for detecting vehicles using different window sizes (calculated serially): 
 
-Window size |	Time to detect
-----------------------------
-192         |	0.4s
-128	        | 0.9s
-96	        | 1.2s
-64	        | 2.84s
-32	        | 2.6s
+Window size (Time to detect)
+
+192 (0.4s)
+
+128 (0.9s)
+
+96 (1.2s)
+
+64 (2.84s)
+
+32 (2.6s)
 
 However, when this was run in parallel, the compute times were larger than the compute times for serial processing – likely due to one or both factors below: 
 * Overhead time (pooling, de-pooling etc.) is significantly larger than time savings
