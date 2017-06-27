@@ -135,7 +135,7 @@ Two techniques are used to remove false positives from the results obtained usin
  
 ![Thresholding on a “heat” map](/images/thres.png)
 
-Here are some more images that show the results from the pipeline. The green boxes show car detections from the classifier and the non-green boxes show car detections after removing false positives: 
+Here are some more images that show the results from the pipeline. The thin green boxes show car detections from the classifier and the thicker green/red boxes show car detections after removing false positives: 
  	 
 ![res](/images/out1.png)
 
@@ -149,7 +149,7 @@ The output video is uploaded here
 ### DEALING WITH FALSE POSITIVES
 For each frame, multiple bounding boxes are combined using the heat map thresholding as described in the previous section. Sometimes, there are peaks in the heat map thresholding that are not connected to one another. These small peaks are merged in to the larger peaks based on a threshold value. This is shown below:
  
-~[After heat map thresholding](/images/merge.png)
+![After heat map thresholding](/images/merge.png)
 
 In addition to this, a simple overlapping box test is used between two consecutive video frames to determine the amount of overlap between the two bounding boxes:
 
@@ -183,3 +183,9 @@ However, when this was run in parallel, the compute times were larger than the c
 * Overhead time (pooling, de-pooling etc.) is significantly larger than time savings
 * There is a bug in the implementation of the parallel code
 Nonetheless, the implementation of the parallel code is also included in the submission for review. As a next step, I intend to profile the code more thoroughly and find out how the time taken for processing each frame can be reduced. 
+
+### TO-DO
+- [ ] Profile Python code to find bottleneck
+- [ ] Re-write code in C++ to improve speed
+- [ ] Combine lane finding and vehicle detection
+- [ ] Investigate use of Faster-RCNN or MASK-RCNN for object detection
